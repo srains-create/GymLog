@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/exerciseLabelTextView" />
 
     <EditText
-        android:id="@id/exerciseInputEditText"
+        android:id="@+id/weightInputEditText"
         android:layout_width="237dp"
         android:layout_height="37dp"
         android:layout_marginStart="8dp"
@@ -72,10 +72,10 @@
         android:text="@string/Reps"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weightLabelTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/weightLabelTextView" />
 
     <EditText
-        android:id="@id/repInputEditText"
+        android:id="@+id/repInputEditText"
         android:layout_width="244dp"
         android:layout_height="39dp"
         android:layout_marginStart="8dp"
@@ -86,14 +86,15 @@
         app:layout_constraintStart_toEndOf="@+id/repLabelTextView" />
 
     <Button
+        android:id="@+id/logButton"
         android:layout_width="390dp"
         android:layout_height="205dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repInputEditText"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:text="@string/log"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repInputEditText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
