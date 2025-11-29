@@ -15,7 +15,9 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     com.daclink.gymlog.databinding.ActivityMainBinding binding;
-    private static final String TAG = "DAC_GYMLOGNOTES";
+
+
+    public static final String TAG = "DAC_GYMLOGNOTES";
 
     String mExercise = "";
     double mWeight = 0.0;
