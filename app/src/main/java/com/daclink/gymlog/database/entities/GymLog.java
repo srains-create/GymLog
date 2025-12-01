@@ -7,9 +7,11 @@ import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.concurrent.AbstractExecutorService;
 
 @Entity(tableName = "gymLogTable")
 public class GymLog {
+    public static AbstractExecutorService databaseWriteExecutor;
     @PrimaryKey(autoGenerate = true)
     private Integer id;
 
