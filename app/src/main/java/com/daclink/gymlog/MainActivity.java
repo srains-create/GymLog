@@ -1,16 +1,23 @@
 package com.daclink.gymlog;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daclink.gymlog.database.GymLogRepository;
 import com.daclink.gymlog.database.entities.GymLog;
+import com.daclink.gymlog.database.entities.User;
 import com.daclink.gymlog.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -29,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     double mWeight = 0.0;
     int mReps = 0;
     //TODO: Add login information.
-    int loggedInUserID = -1;
+    private int loggedInUserID = -1;
+    private User user;
 
 
     @Override
@@ -39,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
          setContentView(binding.getRoot());
 
         loginUser();
+        invalidateOptionsMenu();
 
         if(loggedInUserID == -1){
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
@@ -67,8 +76,60 @@ public class MainActivity extends AppCompatActivity {
         });
         }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.logoutMenuItem);
+        item.setVisible(true);
+        item.setTitle(user.getUsername());
+
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                showLogoutDialog();
+                return false;
+            }
+        });
+        return true;
+    }
+
+    private void showLogoutDialog(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+            }
+        });
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertBuilder.create().show();
+    }
+
+
+
+    private void logout() {
+        //TODO: Finish logout method
+        startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+    }
+
     private void loginUser() {
-        //TODO: create login method.
+        //TODO: make login method functional.
+        user = new User("Joy", "password");
         loggedInUserID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
     }
 
