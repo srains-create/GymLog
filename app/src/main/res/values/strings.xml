@@ -13,4 +13,5 @@
     <string name="Weight">Weight</string>
     <string name="enter_an_Exercise">Enter an Exercise</string>
     <string name="enter_Reps">Enter Reps</string>
+    <string name="nothing_to_show_time_to_hit_the_gym">Nothing to show, time to hit the gym!</string>
 </resources>
