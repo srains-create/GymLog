@@ -1,5 +1,7 @@
 package com.daclink.gymlog;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String MAIN_ACTIVITY_USER_ID = "com.daclink.gymlog.MAIN_ACTIVITY_USER_ID";
     private ActivityMainBinding binding;
 
     private GymLogRepository repository;
@@ -35,8 +38,14 @@ public class MainActivity extends AppCompatActivity {
         binding = com.daclink.gymlog.databinding.ActivityMainBinding.inflate(getLayoutInflater());
          setContentView(binding.getRoot());
 
-        repository = GymLogRepository.getRepository(getApplication());
+        loginUser();
 
+        if(loggedInUserID == -1){
+            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+            startActivity(intent);
+        }
+
+        repository = GymLogRepository.getRepository(getApplication());
         binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
         updateDisplay();
 
@@ -57,7 +66,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         }
-        private void insertGymlogRecord(){
+
+    private void loginUser() {
+        //TODO: create login method.
+        loggedInUserID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
+    }
+
+    static Intent mainActivityIntentFactory(Context context, int userId){
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MAIN_ACTIVITY_USER_ID, userId);
+        return intent;
+    }
+
+    private void insertGymlogRecord(){
         if(mExercise.isEmpty()) {
             return;
         }
