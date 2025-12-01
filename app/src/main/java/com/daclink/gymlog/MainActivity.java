@@ -20,11 +20,13 @@ public class MainActivity extends AppCompatActivity {
     private GymLogRepository repository;
 
 
-    public static final String TAG = "DAC_GYMLOGNOTES";
+    public static final String TAG = "DAC_GYMLOG";
 
     String mExercise = "";
     double mWeight = 0.0;
     int mReps = 0;
+    //TODO: Add login information.
+    int loggedInUserID = -1;
 
 
     @Override
@@ -47,13 +49,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        binding.exerciseInputEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDisplay();
+            }
+        });
         }
         private void insertGymlogRecord(){
         if(mExercise.isEmpty()) {
             return;
         }
 
-        GymLog log = new GymLog(mExercise, mWeight, mReps);
+        GymLog log = new GymLog(mExercise, mWeight, mReps, loggedInUserID);
         repository.insertGymLog(log);
         }
 

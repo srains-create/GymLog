@@ -68,7 +68,7 @@
         android:layout_width="100dp"
         android:layout_height="36dp"
         android:layout_marginStart="16dip"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:text="@string/Reps"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +76,7 @@
 
     <EditText
         android:id="@+id/repInputEditText"
-        android:layout_width="244dp"
+        android:layout_width="273dp"
         android:layout_height="39dp"
         android:layout_marginStart="8dp"
         android:hint="@string/enter_Reps"
@@ -88,7 +88,7 @@
     <Button
         android:id="@+id/logButton"
         android:layout_width="390dp"
-        android:layout_height="205dp"
+        android:layout_height="125dp"
         android:layout_marginTop="16dp"
         android:text="@string/log"
         android:textSize="36sp"

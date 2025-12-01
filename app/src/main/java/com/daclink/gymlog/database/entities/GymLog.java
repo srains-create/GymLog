@@ -1,9 +1,9 @@
 package com.daclink.gymlog.database.entities;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -17,21 +17,37 @@ public class GymLog {
     private double weight;
     private int reps;
     private LocalDateTime date;
+    private int userID;
 
-    public GymLog(String exercise, double weight, int reps) {
+
+    public GymLog(String exercise, double weight, int reps, int userID) {
         this.exercise = exercise;
         this.weight = weight;
         this.reps = reps;
+        this.userID = userID;
         date = LocalDateTime.now();
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return exercise + '\'' +
-                "weight=" + weight + '\n' +
-                "reps=" + reps + '\n' +
+        return exercise + '\n' +
+                "weight= " + weight + '\n' +
+                "reps= " + reps + '\n' +
                 "date: " + date.toString() + '\n' +
-                "=-=-=-=-=-=-=-=\n";
+                "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        GymLog gymLog = (GymLog) o;
+        return Double.compare(weight, gymLog.weight) == 0 && reps == gymLog.reps && userID == gymLog.userID && Objects.equals(id, gymLog.id) && Objects.equals(exercise, gymLog.exercise) && Objects.equals(date, gymLog.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, exercise, weight, reps, date, userID);
     }
 
     public String getExercise() {
@@ -66,17 +82,15 @@ public class GymLog {
         this.date = date;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        GymLog gymLog = (GymLog) o;
-        return Double.compare(weight, gymLog.weight) == 0 && reps == gymLog.reps && Objects.equals(id, gymLog.id) && Objects.equals(exercise, gymLog.exercise) && Objects.equals(date, gymLog.date);
+    public int getUserID() {
+        return userID;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, exercise, weight, reps, date);
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
+
+
 
     public Integer getId() {
         return id;
@@ -85,4 +99,5 @@ public class GymLog {
     public void setId(Integer id) {
         this.id = id;
     }
+
 }
