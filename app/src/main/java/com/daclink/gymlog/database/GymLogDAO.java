@@ -7,7 +7,6 @@ import androidx.room.Query;
 
 import com.daclink.gymlog.database.entities.GymLog;
 
-
 import java.util.List;
 
 
@@ -16,6 +15,9 @@ public interface GymLogDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(GymLog gymLog);
 
-    @Query("SELECT * FROM " + GymLogDatabase.GYM_LOG_TABLE + " order by date DESC")
+    @Query("SELECT * FROM " + GymLogDatabase.GYM_LOG_TABLE + " ORDER BY date DESC")
     List<GymLog> getAllRecords();
+
+    @Query("SELECT * FROM " + GymLogDatabase.GYM_LOG_TABLE + " WHERE userId = :loggedInUserId ORDER BY date DESC")
+    List<GymLog> getRecordsetUserId(int loggedInUserId);
 }
