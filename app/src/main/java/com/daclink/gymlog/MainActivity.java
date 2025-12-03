@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         loginUser(savedInstanceState);
 
         gymLogViewModel.getAllLogsById(loggedInUserId).observe(this, gymLogs -> {
-                    adapter.submitList(gymLogs);
+                   adapter.submitList(gymLogs);
                 });
 
 
@@ -76,29 +76,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         updateSharedPreference();
-          //TODO: REMOVE two lines below
-//        binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
-//        updateDisplay();
+
 
         binding.logButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 getInformationFromDisplay();
                 insertGymlogRecord();
-                //TODO: remove line below
-//                updateDisplay();
 
             }
         });
-/*     TODO: remove this  block.
-        binding.exerciseInputEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               updateDisplay();
-            }
-        });
 
- */
         }
 
     @Override
@@ -112,17 +100,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
         item.setVisible(true);
-        if(user == null){
-            return false;
+        if(user != null){
+            item.setTitle(user.getUsername());
+        } else {
+            item.setTitle("LOGGED IN");
         }
-
-        item.setTitle(user.getUsername());
 
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
                 showLogoutDialog();
-                return false;
+                return true;
             }
         });
         return true;
@@ -179,13 +167,13 @@ public class MainActivity extends AppCompatActivity {
         if(loggedInUserId == LOGGED_OUT){
             loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
         }
-        if(loggedInUserId != LOGGED_OUT){
+        if (loggedInUserId == LOGGED_OUT) {
             return;
         }
         LiveData<User> userObserver = repository.getUserByUserId(loggedInUserId);
-        userObserver.observe(this, user -> {
-            this.user = user;
-            if (this.user != null) {
+        userObserver.observe(this, u -> {
+            if (u != null) {
+                this.user = u;
                 invalidateOptionsMenu();
             }
         });
